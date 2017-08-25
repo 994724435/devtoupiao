@@ -48,7 +48,7 @@ class IndexController extends CommonController {
             $data['name'] =$_POST['name'];
             $data['cont'] =$_POST['cont'];
             $data['pic'] =__ROOT__.$pic;
-            $data['price'] =$_POST['price'];
+            $data['price'] =$_POST['type'];
             $data['effectdays'] =$_POST['effectdays'];
             $data['daycome'] =$_POST['daycome'];
             $data['daynum'] =$_POST['daynum'];
@@ -58,7 +58,7 @@ class IndexController extends CommonController {
             $product =M('product');
             $result = $product->add($data);
             if($result){
-                echo "<script>window.location.href = '".__ROOT__."/index.php/Admin/Index/addproduct';</script>";
+                echo "<script>window.location.href = '".__ROOT__."/index.php/Admin/Index/productlist';</script>";
             }else{
                 echo "<script>alert('添加失败');window.location.href = '".__ROOT__."/index.php/Admin/Index/addproduct';</script>";
             }
@@ -69,7 +69,7 @@ class IndexController extends CommonController {
 
     public function productlist(){
         $product =M('product');
-        $result = $product->select();
+        $result = $product->order('id DESC')->select();
         $this->assign('res',$result);
         $this->display();
     }
@@ -96,7 +96,7 @@ class IndexController extends CommonController {
             if($pic){
                 $data['pic'] =$pic;
             }
-            $data['price'] =$_POST['price'];
+            $data['price'] =$_POST['type'];
             $data['effectdays'] =$_POST['effectdays'];
             $data['daycome'] =$_POST['daycome'];
             $data['daynum'] =$_POST['daynum'];
@@ -124,12 +124,12 @@ class IndexController extends CommonController {
         }else{
             echo "<script>alert('产品不存在');window.location.href = '".__ROOT__."/index.php/Admin/Index/productlist';</script>";
         }
-        if($state==1){
-            $state=2;
-        }else{
-            $state=1;
-        }
-        $res= $product->where(array('id'=>$_GET['id']))->save(array('state'=>$state));
+//        if($state==1){
+//            $state=2;
+//        }else{
+//            $state=1;
+//        }
+        $res= $product->where(array('id'=>$_GET['id']))->delete();
         if($res){
             echo "<script>window.location.href = '".__ROOT__."/index.php/Admin/Index/productlist';</script>";
         }else{
@@ -139,15 +139,14 @@ class IndexController extends CommonController {
 
     public function select(){
         $orderlog = M('orderlog');
-        if($_GET['state']){
-//            $map['name']=array('like','%'.$_GET['name'].'%');
-            $map['states'] =$_GET['state'];
-        }
         if($_GET['uid']){
             $map['userid'] =$_GET['uid'];
         }
-        if($_GET['orderid']){
-            $map['orderid'] =$_GET['orderid'];
+        if($_GET['bianhao']){
+            $map['bianhao'] =$_GET['bianhao'];
+        }
+        if($_GET['type']){
+            $map['producttype'] =$_GET['type'];
         }
         $users= $orderlog->where($map)->select();
 
@@ -178,11 +177,21 @@ class IndexController extends CommonController {
         $this->display();
     }
 
+    public function menberdelete(){
+        $user = M('menber');
+        $res = $user->where(array('uid'=>$_GET['id']))->delete();
+        if ($res) {
+            echo "<script>window.location.href = '".__ROOT__."/index.php/Admin/Menber/select';</script>";
+        }else{
+            echo "<script>alert('删除失败');window.location.href = '".__ROOT__."/index.php/Admin/Menber/select';</script>";
+        }
+    }
+
     public function userdelete(){
         $user = M('user');
         $res = $user->where(array('id'=>$_GET['id']))->delete();
         if ($res) {
-            echo "<script>alert('删除成功');window.location.href = '".__ROOT__."/index.php/Admin/Index/main';</script>";
+            echo "<script>window.location.href = '".__ROOT__."/index.php/Admin/Index/main';</script>";
         }else{
             echo "<script>alert('删除失败');window.location.href = '".__ROOT__."/index.php/Admin/Index/main';</script>";
         }

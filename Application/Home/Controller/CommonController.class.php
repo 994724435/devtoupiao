@@ -3,19 +3,16 @@ namespace Home\Controller;
 use Think\Controller;
 class CommonController extends Controller {
 	public function _initialize(){
-		$function = explode('/',__ACTION__);
-		$curfunction =$function[count($function)-1];
+        $id = $_GET['id'];
 		if(!session('uid')){
-			echo "<script>alert('请登录');";
-			echo "window.location.href='".__ROOT__."/index.php/Home/Login/login';";
+			echo "<script>alert('请验证');";
+			echo "window.location.href='".__ROOT__."/index.php/Home/Login/login/id/".$id."';";
 			echo "</script>";
 			exit;
 		}
 		$menber =M('menber');
 		$res_user =$menber->where(array('uid'=>session('uid')))->select();
-//		$this->assign('function',$this->getfunction($curfunction));
 		$this->assign('username',$res_user[0]);
-//		$this->assign('usertype',$this->chanefortype($res_user[0]['type']));
 	}
 
 	private function getfunction($curfunction){

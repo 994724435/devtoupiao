@@ -1,52 +1,91 @@
-<!doctype html>
-<html class="no-js">
+<!DOCTYPE html>
+<html lang="zh-cn">
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="description" content="">
-	<meta name="keywords" content="">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-	<title>登录</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="renderer" content="webkit">
-	<meta http-equiv="Cache-Control" content="no-siteapp"/>
-	<link rel="stylesheet" href="__ROOT__/Public/Home/css/style.css">
-	<link rel="stylesheet" href="__ROOT__/Public/Home/css/amazeui.min.css">
-	<link rel="stylesheet" href="__ROOT__/Public/Home/css/app.css">
-	<style>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>上海护理创新发明展</title>
+
+	<!-- Bootstrap -->
+	<link href="__ROOT__/Public/Home/images/bootstrap.min.css" rel="stylesheet">
+	<link href="__ROOT__/Public/Home/images/main.css" rel="stylesheet">
+	<link href="__ROOT__/Public/Home/images/enter.css" rel="stylesheet">
+	<style type="text/css">
+		body{
+			padding: 0;
+			margin: 0;
+			background: #009ece url(images/bj.jpg) center top no-repeat;
+			background-size: 100% auto;
+		}
 	</style>
+	<script src="__ROOT__/Public/Home/images/jquery.min.js"></script>
+	<script src="__ROOT__/Public/Home/images/bootstrap.min.js"></script>
+	<script src="__ROOT__/Public/Home/images/jquery.particleground.min.js"></script>
 </head>
 <body>
-<div class="am-g myapp-login">
-	<div class="myapp-login-bg">
-		<div class="myapp-login-logo">
-			<img src="__ROOT__/Public/Home/images/logo.gif" alt="" class="logoI">
+<div id="particles">
+	<canvas class="pg-canvas" width="1920" height="911" style="display: block;"></canvas>
+	<div class="intro" style="margin-top: -256.5px;">
+		<div class="container">
+			<div class="row" style="padding:30px 0;">
+				<div class="col-md-3 col-centered tac">
+					<!--<img src="images/logo.png" alt="logo">-->
+					<h4>《上海护理创新发明展》评选活动</h4>
+				</div>
+			</div>
 		</div>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-3 col-sm-8 col-centered">
+					<form method="post" id="register-form" autocomplete="off" action="" class="nice-validator n-default" novalidate>
+						<div class="form-group">
+							<input type="text" class="form-control input-lg" id="account" name="tel" placeholder="手机号验证" autocomplete="off" aria-required="true" data-tip="">
+						</div>
 
-		<div class="am-u-sm-10 myapp-login-form">
-			<form class="am-form"  method="post" id="login" enctype="multipart/form-data">
-				<!-- <fieldset> -->
-				<div class="am-form-group">
-					<input type="text" class="" name="name" placeholder="用户名">
-				</div>
-				<div class="am-form-group">
-					<input type="password" class=""  name="pwd" placeholder="密码">
-				</div>
-				<!--     <div class="am-form-group">
-                      <input type="text" class=""  placeholder="验证码">
-                    </div> -->
+						<div id="validator-tips" class="validator-tips"></div>
 
-				<p><button type="submit" class="am-btn am-btn-default">登录</button></p>
-				<div class="login-text">
-					<span onclick="location.href='forgetPwd.html'">忘记密码</span>
+						<div class="form-group">
+							<button type="submit" id="submit_button" class="btn btn-primary btn-lg btn-block">验 证</button>
+							<!--<a href="#" class="btn btn-default">取消</a> </div>-->
+						</div>
+					</form>
 				</div>
-				<!-- </fieldset> -->
-			</form>
+			</div>
 		</div>
+		<div class="modal fade" id="myModal" tabindex="-1" style="text-align: left" role="dialog">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">×</span> </button>
+						<h4 class="modal-title">用户协议</h4>
+					</div>
+					<div class="modal-body" id="agreementContent"></div>
+				</div>
+			</div>
+		</div>
+		<link rel="stylesheet" href="__ROOT__/Public/Home/images/jquery.validator.css">
+		<!--<script src="images/zh-CN.js"></script>-->
+		<!--<script src="images/jquery.validator.min.js"></script>-->
 	</div>
 </div>
-<!-- <script src="js/jquery.min.js"></script>
-
-<script src="js/amazeui.min.js"></script>
-<script src="js/app.js"></script> -->
+<script>
+    $(document).ready(function () {
+        var intro = $('.intro');
+        $('#particles').particleground({
+            dotColor: 'rgba(52, 152, 219, 0.36)',
+            lineColor: 'rgba(52, 152, 219, 0.86)',
+            density: 130000,
+            proximity: 500,
+            lineWidth: 0.2
+        });
+        intro.css({
+            'margin-top': -(intro.height() / 2 + 100)
+        });
+    });
+</script>
+<!--<div style="text-align:center;">-->
+<!--<p>来源:<a href="http://www.mycodes.net/" target="_blank">源码之家</a></p>-->
+<!--</div>-->
 </body>
 </html>

@@ -5,16 +5,17 @@ use Think\Controller;
 header('content-type:text/html;charset=utf-8');
 class LoginController extends Controller{
     public function login(){
+        $id = $_GET['id'];
         if($_POST){
             $menber =M('menber');
-            $res = $menber->where(array('tel'=>$_POST['name'],'pwd'=>$_POST['pwd']))->select();
-            if($res[0]){
+            $res = $menber->where(array('tel'=>$_POST['tel']))->select();
+            if($res[0]&&$id){
                 session_start();
-                session('name',$_POST['name']);
+                session('name',$_POST['tel']);
                 session('uid',$res[0]['uid']);
-                echo "<script>window.location.href='".__ROOT__."/index.php/Home/Index/index';</script>";
+                echo "<script>window.location.href='".__ROOT__."/index.php/Home/Index/index/id/".$id."';</script>";
             }else{
-                echo "<script>alert('用户名或密码错误');</script>";
+                echo "<script>alert('手机不存在');</script>";
             }
         }
         $this->display();

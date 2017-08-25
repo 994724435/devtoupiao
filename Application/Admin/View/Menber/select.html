@@ -31,12 +31,8 @@
 		        </tr>
 		        <tr>
 		          <th>用户id</th>
-					<th>注册上家id</th>
 					<th>姓名</th>
-		          <th>动态钱包</th>
-				  <th>静态钱包</th>
-				  <th>充值钱包</th>
-		          <th>注册时间</th>
+		          <th>电话</th>
 					<th>操作</th>
 		        </tr>
 		      </thead>
@@ -54,13 +50,9 @@
 					}
 		      	?>
 		          <th scope="row">{$v.uid}</th>
-				  <th>{$v.fuid}</th>
 				  <th>{$v.name}</th>
-		           <th>{$v.dongbag}</th>
-				  <th>{$v.jingbag}</th>
-				  <th>{$v.chargebag}</th>
-				  <td>{$v.addymd}</td>
-				  <th><a href="__ROOT__/index.php/Admin/Menber/editeUser/id/{$v.uid}">修 改 </a></th>
+		           <th>{$v.tel}</th>
+				  <th><a href="__ROOT__/index.php/Admin/Index/menberdelete/id/{$v.uid}">删 除 </a></th>
 		        </tr>
 		      	<?php $i++ ;?>
 		       </foreach>		      

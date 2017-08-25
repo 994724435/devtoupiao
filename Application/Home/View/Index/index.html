@@ -1,122 +1,78 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>公司首页</title>
-	<link href="https://cdn.bootcss.com/Swiper/3.4.2/css/swiper.min.css" rel="stylesheet">
-	<script src="https://cdn.bootcss.com/Swiper/3.4.2/js/swiper.min.js"></script>
-	<link href="__ROOT__/Public/Home/css/bootstrap.min.css" rel="stylesheet">
-	<link href="__ROOT__/Public/Home/css/aui.min.css" rel="stylesheet">
-	<link href="__ROOT__/Public/Home/css/mui.picker.css" rel="stylesheet">
-	<link href="__ROOT__/Public/Home/css/mui.poppicker.css" rel="stylesheet">
-	<link href="__ROOT__/Public/Home/css/style.css" rel="stylesheet">
-	<script type="text/javascript" src="__ROOT__/Public/Home/js/jquery-3.1.1.min.js"></script>
-	<script type="text/javascript" src="__ROOT__/Public/Home/js/aui.js"></script>
-	<script type="text/javascript" src="__ROOT__/Public/Home/js/mui.picker.js"></script>
-	<script type="text/javascript" src="__ROOT__/Public/Home/js/mui.poppicker.js"></script>
-	<script type="text/javascript" src="__ROOT__/Public/Home/js/bootstrap.min.js"></script>
-	<style>
-		.swiper-slide img{width: 100%;}
-		.swiper-container{margin-top: -20px;}
-	</style>
+	<meta charset="utf-8" />
+	<title>上海护理创新发明展</title>
+	<!--手机端需要添加-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+
+	<!--手机端需要添加---->
+	<link rel="stylesheet" href="__ROOT__/Public/Home/css/test_rx.css">
+	<script src="__ROOT__/Public/Home/js/jquery-1.8.3.min.js"></script>
+	<script src="__ROOT__/Public/Home/js/jQuery.fontFlex.js"></script>
+	<script>
+        $(document).ready(function(e) {
+            //320宽度的时候html字体大小是20px;、640宽度的时候html字体大小是40px;
+            $('html').fontFlex(20, 40, 16);
+            //
+            $(".dxt_box li").click(function(){
+                $(this).addClass("on").siblings().removeClass("on");
+                $(this).parent(".dxt_box").parent(".kcks_title_ts").attr("date-title",1);
+                $(this).parent(".dxt_box").parent(".last").attr("date-title",0);
+            });
+
+            //判断选择是还是否
+            $(".tj_zuotm").click(function(){
+                var dxq_li = $(".dxt_box li");
+                var li1 = $(".li1");
+                var li2 = $(".li2");
+                if(li1.hasClass("on")){
+                    window.location="__ROOT__/index.php/Home/Index/result/id/{$id}/state/1";
+				}
+                if(li2.hasClass("on")){
+                    window.location="__ROOT__/index.php/Home/Index/result/id/{$id}/state/2";
+                }
+
+                if(dxq_li.hasClass("on")){
+
+                }else{
+                    alert("请选择！");
+                }
+            });
+
+        });
+	</script>
+
 </head>
 <body>
-<!-- 公共头部 -->
-<include file="Common/header" />
 
-<!-- 公共头部 -->
-<div class="container-fluid noPadding">
-	<!--<img src="__ROOT__/Public/Home/images/1.jpg" alt="" class="img-responsive" alt="Responsive image" style="margin-top: -20px;">-->
-	<!--<div class="introduce" style="padding:0 10px;">-->
-		<!--{$intro.cont}-->
-	<!--</div>-->
-	<div class="swiper-container">
-		<div class="swiper-wrapper">
-			<div class="swiper-slide">
-				<img src="__ROOT__/Public/Home/images/banner1.png" alt="">
-			</div>
-			<div class="swiper-slide">
-				<img src="__ROOT__/Public/Home/images/banner2.jpg" alt="">
-			</div>
-			<div class="swiper-slide">
-				<img src="__ROOT__/Public/Home/images/banner3.png" alt="">
-			</div>
-		</div>
-	   <div class="swiper-pagination"></div>
+<div class="wjdt_title">
+	<h5>{$intro.name}</h5>
+	<p>类别：<if condition="$intro.price eq 1">实物类<elseif condition="$intro.price eq 2"/>壁报类<elseif condition="$intro.price eq 3"/>多媒体类</if></p>
+	<p>编号：{$intro.cont}</p>
+
+	<img src="__ROOT__/Public/Home/images/ls.svg" style="width:3rem; position:absolute; top:1rem; left:1rem; "> </div>
+<div class="dtks_box" >
+	<!--题目-->
+	<div class="kcks_title_ts " date-title="2" date-last="0">
+		<h4 class=" kctm_zzbt">请投出您的奖项？</h4>
+		<ul class="dxt_box">
+			<li class="li1"> <em></em><span>最佳创新奖</span> </li>
+			<li class="li2"> <em></em><span>最佳实用奖</span> </li>
+		</ul>
 	</div>
-	<ul class="nav grid"  id="myGRid" style="margin-top: 10px">
-
-		<li>
-			<a href="__ROOT__/index.php/Home/Index/introduce.html">
-				<div class="iconImgDiv"><img src="__ROOT__/Public/Home/images/mif/p_10.jpg" alt="" class="iconImg"></div>
-				<div class="gridText">公司简介</div>
-			</a>
-		</li>
-		<li>
-			<a href="__ROOT__/index.php/Home/Index/advertising.html">
-				<div class="iconImgDiv"><img src="__ROOT__/Public/Home/images/mif/p_20.png" alt="" class="iconImg"></div>
-				<div class="gridText">公司公告</div>
-			</a>
-		</li>
-		<li>
-			<a href="__ROOT__/index.php/Home/Index/K.html">
-				<div class="iconImgDiv"><img src="__ROOT__/Public/Home/images/mif/p_1.png" alt="" class="iconImg"></div>
-				<div class="gridText">同步k线图</div>
-			</a>
-		</li>
-		<li>
-			<a href="__ROOT__/index.php/Home/Index/gruop.html">
-				<div class="iconImgDiv"><img src="__ROOT__/Public/Home/images/mif/p_17.jpg" alt="" class="iconImg"></div>
-				<div class="gridText">值班团队</div>
-			</a>
-		</li>
-		<li>
-			<a href="__ROOT__/index.php/Home/Index/professor.html">
-				<div class="iconImgDiv"><img src="__ROOT__/Public/Home/images/mif/p_5.png" alt="" class="iconImg"></div>
-				<div class="gridText">分析专家</div>
-			</a>
-		</li>
-		<li>
-			<a href="__ROOT__/index.php/Home/User/my.html">
-				<div class="iconImgDiv"><img src="__ROOT__/Public/Home/images/mif/p_7.png" alt="" class="iconImg"></div>
-				<div class="gridText">个人中心</div>
-			</a>
-		</li>
-		<li>
-			<a href="__ROOT__/index.php/Home/Index/gongpai.html">
-				<div class="iconImgDiv"><img src="__ROOT__/Public/Home/images/mif/p_9.png" alt="" class="iconImg"></div>
-				<div class="gridText">MIF公排</div>
-			</a>
-		</li>
-		<li>
-			<a href="__ROOT__/index.php/Home/Index/share/id/{$username.uid}">
-				<div class="iconImgDiv"><img src="__ROOT__/Public/Home/images/mif/p_6.png" alt="" class="iconImg"></div>
-				<div class="gridText">MIF分享</div>
-			</a>
-		</li>
-		<li>
-			<a href="__ROOT__/index.php/Home/Login/login">
-				<div class="iconImgDiv"><img src="__ROOT__/Public/Home/images/mif/p_15.png" alt="" class="iconImg"></div>
-				<div class="gridText">退出登录</div>
-			</a>
-		</li>
-
-	</ul>
-
-	<video autoplay="autoplay" src="__ROOT__/Public/Home/images/video.mp4" controls="controls">
-		您的浏览器不支持 video 标签。
-	</video>
 
 </div>
 
-<script>
-    var mySwiper = new Swiper('.swiper-container', {
-        autoplay: 2000,//可选选项，自动滑动
-        pagination : '.swiper-pagination',
-    })
-</script>
-</body>
+<!--结束------------------------------------------>
 
+<div class="kasj_db_but "> <a href="javascript:void(0);" class="tj_zuotm">提交选择</a> </div>
+
+<!--<div style="text-align:center;">-->
+<!--<p>来源:<a href="http://www.mycodes.net/" target="_blank">源码之家</a></p>-->
+<!--</div>-->
+
+</body>
 </html>
+

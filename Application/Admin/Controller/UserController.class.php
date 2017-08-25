@@ -8,7 +8,7 @@ class UserController extends Controller {
         $id=$_GET['id'];
         //生成二维码图片 http://localhost/index.php/Home/Login/reg
         $object = new \QRcode();
-        $url="http://402231.ouyouhui.com".'/index.php/Home/Login/reg/fid/'.$id;
+        $url="http://402231.ouyouhui.com".'/index.php/Home/Index/index/id/'.$id;
 
         $level=3;
         $size=5;
