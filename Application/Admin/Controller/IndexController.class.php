@@ -45,6 +45,12 @@ class IndexController extends CommonController {
                     $pic=$p.$img;
                 }
             }
+            $product =M('product');
+            $isadd = $product->where(array('price'=>$_POST['type']))->select();
+            if($isadd[0]){
+                echo "<script>alert('编号已存在');window.location.href = '".__ROOT__."/index.php/Admin/Index/addproduct';</script>";
+            }
+
             $data['name'] =$_POST['name'];
             $data['cont'] =$_POST['cont'];
             $data['pic'] =__ROOT__.$pic;
@@ -55,7 +61,7 @@ class IndexController extends CommonController {
             $data['one'] =$_POST['one'];
             $data['two'] =$_POST['two'];
             $data['addtime'] =date('Y-m-d H:i:s',time());
-            $product =M('product');
+
             $result = $product->add($data);
             if($result){
                 echo "<script>window.location.href = '".__ROOT__."/index.php/Admin/Index/productlist';</script>";
@@ -69,7 +75,12 @@ class IndexController extends CommonController {
 
     public function productlist(){
         $product =M('product');
-        $result = $product->order('id DESC')->select();
+        if($_GET['type']){
+            $result = $product->where(array('price'=>$_GET['type']))->order('salenum DESC')->select();
+        }else{
+            $result = $product->order('salenum DESC')->select();
+        }
+
         $this->assign('res',$result);
         $this->display();
     }
@@ -96,6 +107,12 @@ class IndexController extends CommonController {
             if($pic){
                 $data['pic'] =$pic;
             }
+
+            $isadd = $product->where(array('price'=>$_POST['type']))->select();
+            if($isadd[0]){
+                echo "<script>alert('编号已存在');window.location.href = '".__ROOT__."/index.php/Admin/Index/productlist';</script>";
+            }
+
             $data['price'] =$_POST['type'];
             $data['effectdays'] =$_POST['effectdays'];
             $data['daycome'] =$_POST['daycome'];
