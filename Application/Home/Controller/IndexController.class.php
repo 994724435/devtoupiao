@@ -14,101 +14,91 @@ class IndexController extends CommonController {
 	}
 
 
-	// 1 实物类 2壁报类 3多媒体类
-
-    public function result(){
-        $product =M('product');
-        $order = M("orderlog");
-        $state = $_GET['state'];
-        $intro= $product->where(array('id'=>$_GET['id']))->select();
-        $orderlog = $order->where(array('userid'=>session('uid'),'productid'=>$_GET['id']))->select();
-        $type =$orderlog[0]['price'];
-        $title = "投票结果";
-        if($orderlog[0]){
-            $title = "该展览品您已过投票";
-        }else{
-            // 创新奖
-            $alllei = $order->where(array('userid'=>session('uid'),'state'=>$state))->select();
-            $out =count($alllei);
-
-
-            if($state ==1){   //  1 实物类
-                if($out > 9){
-                    $title = "该类别做多能投10票";
-                }else{
-                    $num = $intro[0]['salenum'] + 1;
-                    $product->where(array('id'=>$_GET['id']))->save(array('salenum'=>$num));
-                    $logdata['userid'] = session('uid');
-                    $logdata['productid'] = $_GET['id'];
-                    $logdata['bianhao'] =$intro[0]['cont'];
-                    $logdata['productname'] = $intro[0]['name'];
-                    $logdata['producttype'] = $intro[0]['price'];
-                    $logdata['addtime'] = time();
-                    $logdata['addymd'] = date("Y-m-d H:i:s",time());
-                    $logdata['state'] = $state;
-                    $order->add($logdata);
-                }
-            }else{             // 2壁报类 3多媒体类  是3到6个
-                if($out > 5){
-                    $title = "该类别做多能投6票";
-                }else{
-                    $num = $intro[0]['salenum'] + 1;
-                    $product->where(array('id'=>$_GET['id']))->save(array('salenum'=>$num));
-                    $logdata['userid'] = session('uid');
-                    $logdata['productid'] = $_GET['id'];
-                    $logdata['bianhao'] =$intro[0]['cont'];
-                    $logdata['productname'] = $intro[0]['name'];
-                    $logdata['producttype'] = $intro[0]['price'];
-                    $logdata['addtime'] = time();
-                    $logdata['addymd'] = date("Y-m-d H:i:s",time());
-                    $logdata['state'] = $state;
-                    $order->add($logdata);
-                }
-
+	public function isadd($type,$times){
+	    if($type == 1){
+	        if($times > 9){
+	            return 0;
+            }else{
+	            return 1;
+            }
+        }elseif ($type == 2){
+            if($times > 5){
+                return 0;
+            }else{
+                return 1;
+            }
+        }elseif ($type == 3){
+            if($times > 5){
+                return 0;
+            }else{
+                return 1;
             }
         }
-
-
-        // 历史奖
-        $orderchuang = $order->where(array('userid'=>session('uid'),'state'=>1))->select();
-        $ordershiyong = $order->where(array('userid'=>session('uid'),'state'=>2))->select();
-        $orderduomei = $order->where(array('userid'=>session('uid'),'state'=>3))->select();
-        $chuang =count($orderchuang);
-        $yong = count($ordershiyong);
-        $duomei = count($orderduomei);
-
-        $ordercurl = $order->where(array('userid'=>session('uid'),'state'=>$state))->select();
-        $times = $this->changeJiang($state)."您已经投出".count($ordercurl)."个作品";
-
-        if($type == 1){
-            $msg = "最少投5票";
-            if($yong > 5 ){
-                $msg = "最多投10票";
-            }
-        }elseif ($type==2){
-            $msg = "最少投3票";
-            if($chuang > 3 ){
-                $msg = "最多投6票";
-            }
-        }else{
-            $msg = "最少投3票";
-            if($duomei > 3 ){
-                $msg = "最多投6票";
-            }
-        }
-
-        $this->assign('chuang',$chuang);
-        $this->assign('yong',$yong);
-        $this->assign('times',$times);
-
-        $this->assign('msg',$msg);
-
-        $this->assign('intro',$intro[0]);
-        $this->assign('title',$title);
-        $this->assign('id',$_GET['id']);
-        $this->display();
     }
 
+	// 1 实物类 2壁报类 3多媒体类
+    public function result()
+    {
+        $product = M('product');
+        $order = M("orderlog");
+        $state = $_GET['state'];
+        $intro = $product->where(array('id' => $_GET['id']))->select();
+        $orderlog = $order->where(array('userid' => session('uid'), 'productid' => $_GET['id']))->select();
+        $type = $intro[0]['price'];
+        $title = "投票结果";
+        if ($orderlog[0]) {
+            $title = "该展览品您已过投票";
+        } else {
+
+            $alllei = $order->where(array('userid' => session('uid'), 'state' => $state))->select();
+            $out = count($alllei);
+
+            // 是否添加
+            if ($this->isadd($type, $out)) {
+                $num = $intro[0]['salenum'] + 1;
+                $product->where(array('id' => $_GET['id']))->save(array('salenum' => $num));
+                $logdata['userid'] = session('uid');
+                $logdata['productid'] = $_GET['id'];
+                $logdata['bianhao'] = $intro[0]['cont'];
+                $logdata['productname'] = $intro[0]['name'];
+                $logdata['producttype'] = $intro[0]['price'];
+                $logdata['addtime'] = time();
+                $logdata['addymd'] = date("Y-m-d H:i:s", time());
+                $logdata['state'] = $state;
+                $order->add($logdata);
+            }
+        }
+
+        $ordercurl = $order->where(array('userid' => session('uid'), 'state' => $state))->select();
+        $curltime = count($ordercurl);
+        $times = $this->changeJiang($state) . "您已经投出" . $curltime . "个作品";
+
+        if ($type == 1) {
+            $msg = "最少投5票";
+            if ($curltime > 5) {
+                $msg = "最多投10票";
+            }
+        } elseif ($type == 2) {
+            $msg = "最少投3票";
+            if ($curltime > 3) {
+                $msg = "最多投6票";
+            }
+        } else {
+            $msg = "最少投3票";
+            if ($curltime > 3) {
+                $msg = "最多投6票";
+            }
+        }
+
+        $this->assign('times', $times);
+
+        $this->assign('msg', $msg);
+
+        $this->assign('intro', $intro[0]);
+        $this->assign('title', $title);
+        $this->assign('id', $_GET['id']);
+        $this->display();
+    }
 
     private function changeJiang($state){
         if($state ==1){
