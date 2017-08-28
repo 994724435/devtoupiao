@@ -21,7 +21,8 @@ class IndexController extends CommonController {
         $order = M("orderlog");
         $state = $_GET['state'];
         $intro= $product->where(array('id'=>$_GET['id']))->select();
-        $orderlog = $order->where(array('userid'=>session('uid'),'productid'=>$_GET['id'],'state'=>$state))->select();
+        $orderlog = $order->where(array('userid'=>session('uid'),'productid'=>$_GET['id']))->select();
+        $type =$orderlog[0]['price'];
         $title = "投票结果";
         if($orderlog[0]){
             $title = "该展览品您已过投票";
@@ -29,7 +30,6 @@ class IndexController extends CommonController {
             // 创新奖
             $alllei = $order->where(array('userid'=>session('uid'),'state'=>$state))->select();
             $out =count($alllei);
-
 
 
             if($state ==1){   //  1 实物类
@@ -77,34 +77,45 @@ class IndexController extends CommonController {
         $yong = count($ordershiyong);
         $duomei = count($orderduomei);
 
-        $msgyong = "最少投5票";
-        if($yong > 5 ){
-            $msgyong = "最多投10票";
-        }
+        $ordercurl = $order->where(array('userid'=>session('uid'),'state'=>$state))->select();
+        $times = $this->changeJiang($state)."您已经投出".count($ordercurl)."个作品";
 
-        $msgchuang = "最少投3票";
-        if($chuang > 3 ){
-            $msgchuang = "最多投6票";
+        if($type == 1){
+            $msg = "最少投5票";
+            if($yong > 5 ){
+                $msg = "最多投10票";
+            }
+        }elseif ($type==2){
+            $msg = "最少投3票";
+            if($chuang > 3 ){
+                $msg = "最多投6票";
+            }
+        }else{
+            $msg = "最少投3票";
+            if($duomei > 3 ){
+                $msg = "最多投6票";
+            }
         }
-
-        $msgduo = "最少投3票";
-        if($duomei > 3 ){
-            $msgduo = "最多投6票";
-        }
-
 
         $this->assign('chuang',$chuang);
         $this->assign('yong',$yong);
-        $this->assign('duomei',$duomei);
+        $this->assign('times',$times);
 
-        $this->assign('msgchuang',$msgchuang);
-        $this->assign('msgyong',$msgyong);
-        $this->assign('msgduomei',$msgduo);
+        $this->assign('msg',$msg);
 
         $this->assign('intro',$intro[0]);
         $this->assign('title',$title);
         $this->assign('id',$_GET['id']);
         $this->display();
+    }
+
+
+    private function changeJiang($state){
+        if($state ==1){
+            return "创新奖";
+        }elseif ($state==2){
+            return "实用奖";
+        }
     }
 
 	private function getlists($url)

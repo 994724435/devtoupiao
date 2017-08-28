@@ -10,9 +10,10 @@ class LoginController extends Controller{
             $menber =M('menber');
             $res = $menber->where(array('tel'=>$_POST['tel']))->select();
             if($res[0]&&$id){
-                session_start();
-                session('name',$_POST['tel']);
-                session('uid',$res[0]['uid']);
+//                session_start();
+                session(array('uid'=>$res[0]['uid'],'expire'=>1000));
+//                session('name',$_POST['tel']);
+//                session('uid',$res[0]['uid']);
                 echo "<script>window.location.href='".__ROOT__."/index.php/Home/Index/index/id/".$id."';</script>";
             }else{
                 echo "<script>alert('手机不存在');</script>";

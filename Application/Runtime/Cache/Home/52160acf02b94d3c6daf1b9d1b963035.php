@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<?php if (!defined('THINK_PATH')) exit();?>﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8" />
@@ -8,9 +8,9 @@
 <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
 
 <!--手机端需要添加---->
-<link rel="stylesheet" href="__ROOT__/Public/Home/css/test_rx.css">
-<script src="__ROOT__/Public/Home/js/jquery-1.8.3.min.js"></script>
-<script src="__ROOT__/Public/Home/js/jQuery.fontFlex.js"></script>
+<link rel="stylesheet" href="/devtoupiao/Public/Home/css/test_rx.css">
+<script src="/devtoupiao/Public/Home/js/jquery-1.8.3.min.js"></script>
+<script src="/devtoupiao/Public/Home/js/jQuery.fontFlex.js"></script>
 <script>
 $(document).ready(function(e) {
 	//320宽度的时候html字体大小是20px;、640宽度的时候html字体大小是40px;
@@ -60,20 +60,20 @@ $(document).ready(function(e) {
 <body>
 
 <div class="wjdt_title">
-  <h5>{$intro.name}</h5>
-  <p>类别：<if condition="$intro.price eq 1">实物类<elseif condition="$intro.price eq 2"/>壁报类<elseif condition="$intro.price eq 3"/>多媒体类</if></p>
-  <p>编号：{$intro.cont}</p>
+  <h5><?php echo ($intro["name"]); ?></h5>
+  <p>类别：<?php if($intro["price"] == 1): ?>实物类<?php elseif($intro["price"] == 2): ?>壁报类<?php elseif($intro["price"] == 3): ?>多媒体类<?php endif; ?></p>
+  <p>编号：<?php echo ($intro["cont"]); ?></p>
 
-  <img src="__ROOT__/Public/Home/images/ls.svg" style="width:3rem; position:absolute; top:1rem; left:1rem; "> </div>
+  <img src="/devtoupiao/Public/Home/images/ls.svg" style="width:3rem; position:absolute; top:1rem; left:1rem; "> </div>
 <div class="dtks_box" >
    <!--题目-->
   <div class="kcks_title_ts " date-title="2" date-last="0">
-    <h4 class=" kctm_zzbt" style="color: #f05150;">{$title}</h4>
+    <h4 class=" kctm_zzbt" style="color: #f05150;"><?php echo ($title); ?></h4>
     <ul class="dxt_box">
-      <li><span>{$times}，{$msg}</span> </li>
-      <!--<li><span>创新奖您已经投出{$chuang}个作品，{$msgchuang}</span> </li>-->
-      <!--<li><span>实用奖您已经投出{$yong}个作品，{$msgyong}</span> </li>-->
-      <!--<li><span>多媒体奖您已经投出{$duomei}个作品，{$msgduomei}</span> </li>-->
+      <li><span><?php echo ($times); ?>，<?php echo ($msg); ?></span> </li>
+      <!--<li><span>创新奖您已经投出<?php echo ($chuang); ?>个作品，<?php echo ($msgchuang); ?></span> </li>-->
+      <!--<li><span>实用奖您已经投出<?php echo ($yong); ?>个作品，<?php echo ($msgyong); ?></span> </li>-->
+      <!--<li><span>多媒体奖您已经投出<?php echo ($duomei); ?>个作品，<?php echo ($msgduomei); ?></span> </li>-->
     </ul>
   </div>
 
@@ -89,4 +89,3 @@ $(document).ready(function(e) {
 
 </body>
 </html>
-

@@ -75,10 +75,14 @@ class IndexController extends CommonController {
 
     public function productlist(){
         $product =M('product');
+        $order = 'salenum DESC';
+        if($_GET['order']){
+            $order = 'id DESC';
+        }
         if($_GET['type']){
-            $result = $product->where(array('price'=>$_GET['type']))->order('salenum DESC')->select();
+            $result = $product->where(array('price'=>$_GET['type']))->order($order)->select();
         }else{
-            $result = $product->order('salenum DESC')->select();
+            $result = $product->order($order)->select();
         }
 
         $this->assign('res',$result);
